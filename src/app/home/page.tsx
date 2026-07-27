@@ -20,7 +20,7 @@ export default function UserHomePage() {
           <Card className="shadow-sm border-0 mb-3">
             <Card.Body className="d-flex justify-content-between align-items-center p-4">
               <div>
-                <Card.Title className="fw-bold mb-1">Engineers' Council</Card.Title>
+                <Card.Title className="fw-bold mb-1">Engineers&apos; Council</Card.Title>
                 <Card.Text className="text-muted mb-0">Member since Fall 2025</Card.Text>
               </div>
               <Button variant="outline-success" style={{ color: '#024731', borderColor: '#024731' }}>
@@ -51,7 +51,7 @@ export default function UserHomePage() {
               <ul className="list-unstyled mb-0">
                 <li className="mb-4 pb-3 border-bottom">
                   <Badge bg="danger" className="me-2 mb-2">Urgent</Badge>
-                  <div className="fw-bold">Engineers' Council</div>
+                  <div className="fw-bold">Engineers&apos; Council</div>
                   <div className="text-muted small">General Meeting tomorrow at 5:00 PM in POST 101.</div>
                 </li>
                 <li className="mb-4 pb-3 border-bottom">

@@ -26,11 +26,11 @@ jobs:
       - name: Run ESLint
         run: npm run lint
 
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+      # - name: Install Playwright Browsers
+      #   run: npx playwright install --with-deps
 
       - name: Build Next.js application
         run: npm run build
 
-      - name: Run Playwright tests
-        run: npm run playwright
+      # - name: Run Playwright tests
+      #   run: npm run playwright

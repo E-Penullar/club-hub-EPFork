@@ -1,0 +1,124 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ==========================================
+// NextAuth.js Standard Models (用于用户认证)
+// ==========================================
+
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String? @db.Text
+  access_token       String? @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String? @db.Text
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ==========================================
+// Club Hub Business Models (核心业务模型)
+// ==========================================
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  
+  // 角色权限控制 (Student / Officer / Admin)
+  role          Role      @default(STUDENT) 
+  
+  // 关系映射
+  accounts      Account[]
+  sessions      Session[]
+  managedClubs  Club[]    @relation("ClubManager")
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Club {
+  id            String         @id @default(cuid())
+  name          String         @unique
+  description   String?        @db.Text
+  email         String?
+  meetingTime   String?
+  location      String?
+  image         String?        // 用于展示社团图片的链接 (对应 DirectoryPage 的 Placeholder)
+  
+  // 系统管理员后台控制的状态
+  status        ClubStatus     @default(PENDING) 
+  
+  // 关系映射
+  officerId     String
+  officer       User           @relation("ClubManager", fields: [officerId], references: [id])
+  announcements Announcement[]
+
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model Announcement {
+  id        String   @id @default(cuid())
+  title     String
+  content   String   @db.Text
+  
+  // 关系映射
+  clubId    String
+  // 社团删除时级联删除其下的公告
+  club      Club     @relation(fields: [clubId], references: [id], onDelete: Cascade) 
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ==========================================
+// Enums (枚举类型)
+// ==========================================
+
+enum Role {
+  STUDENT
+  OFFICER
+  ADMIN
+}
+
+enum ClubStatus {
+  ACTIVE
+  INACTIVE
+  PENDING
+}

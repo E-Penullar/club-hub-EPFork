@@ -51,7 +51,7 @@ export default function UserHomePage() {
               <ul className="list-unstyled mb-0">
                 <li className="mb-4 pb-3 border-bottom">
                   <Badge bg="danger" className="me-2 mb-2">Urgent</Badge>
-                  <div className="fw-bold">Engineers' Council</div>
+                  <div className="fw-bold">Engineers&apos; Council</div>
                   <div className="text-muted small">General Meeting tomorrow at 5:00 PM in POST 101.</div>
                 </li>
                 <li className="mb-4 pb-3 border-bottom">

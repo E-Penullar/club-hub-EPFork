@@ -7,7 +7,7 @@ export default function ClubAdminPage() {
       <Row className="mb-4">
         <Col>
           <h1 className="fw-bold" style={{ color: '#024731' }}>Manage Club Profile</h1>
-          <p className="text-muted fs-5">Update your organization's details, meeting times, and announcements.</p>
+          <p className="text-muted fs-5">Update your organization&apos;s details, meeting times, and announcements.</p>
         </Col>
       </Row>
 

@@ -31,7 +31,7 @@ export default function DirectoryPage() {
               <span className="text-secondary">[ Club Image Placeholder ]</span>
             </div>
             <Card.Body>
-              <Card.Title className="fw-bold">Engineers' Council</Card.Title>
+              <Card.Title className="fw-bold">Engineers&apos; Council</Card.Title>
               <Card.Text className="text-muted">
                 Supporting engineering students through networking, professional development, and community building projects.
               </Card.Text>

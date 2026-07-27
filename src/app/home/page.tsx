@@ -20,7 +20,7 @@ export default function UserHomePage() {
           <Card className="shadow-sm border-0 mb-3">
             <Card.Body className="d-flex justify-content-between align-items-center p-4">
               <div>
-                <Card.Title className="fw-bold mb-1">Engineers' Council</Card.Title>
+                <Card.Title className="fw-bold mb-1">Engineers&apos; Council</Card.Title>
                 <Card.Text className="text-muted mb-0">Member since Fall 2025</Card.Text>
               </div>
               <Button variant="outline-success" style={{ color: '#024731', borderColor: '#024731' }}>

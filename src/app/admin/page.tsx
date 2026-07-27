@@ -64,7 +64,7 @@ export default function AdminDashboardPage() {
               </thead>
               <tbody>
                 <tr>
-                  <td className="align-middle fw-bold">Engineers' Council</td>
+                  <td className="align-middle fw-bold">Engineers&apos; Council</td>
                   <td className="align-middle"><Badge bg="success">Active</Badge></td>
                   <td className="align-middle">124</td>
                   <td className="align-middle text-center">

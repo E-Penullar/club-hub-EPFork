@@ -1,10 +1,21 @@
-// 注意这里的导入路径要与 schema.prisma 中的自定义 output 一致
+import { Pool } from 'pg';
+import { PrismaPg } from '@prisma/adapter-pg';
+// 注意：这里依然使用你原本的自定义生成路径
 import { PrismaClient } from '../generated/prisma'; 
 
 const prismaClientSingleton = () => {
-  return new PrismaClient();
+  // 从 .env 文件获取数据库连接字符串
+  const connectionString = process.env.DATABASE_URL;
+  
+  // 初始化 PG 连接池
+  const pool = new Pool({ connectionString });
+  
+  // 将连接池包装成 Prisma 适配器
+  const adapter = new PrismaPg(pool);
+  
+  // 实例化 Prisma Client 并传入适配器
+  return new PrismaClient({ adapter });
 };
-
 
 declare global {
   var prisma: undefined | ReturnType<typeof prismaClientSingleton>;

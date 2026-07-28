@@ -17,6 +17,8 @@ export default async function ManageClubPage() {
   // 2. 写入逻辑 (Server Action)：处理包含多个字段的表单提交
   async function updateClubInfo(formData: FormData) {
     'use server'; 
+
+  if (!club) return;
     
     // 从表单中提取所有输入值
     const description = formData.get('description') as string;
@@ -46,7 +48,7 @@ export default async function ManageClubPage() {
       <div className="row mb-4">
         <div className="col-12">
           <h1 className="fw-bold" style={{ color: '#024731' }}>Manage Club Profile</h1>
-          <p className="text-muted">Update your organization's details, meeting times, and announcements.</p>
+          <p className="text-muted">Update your organization&apos;s details, meeting times, and announcements.</p>
         </div>
       </div>
       

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 // 请确保这里的路径能正确指向你的 prisma.ts
 import prisma from '../../lib/prisma'; 
+export const dynamic = 'force-dynamic';
 
 export default async function DirectoryPage() {
   // 从数据库动态读取 ACTIVE 状态的社团

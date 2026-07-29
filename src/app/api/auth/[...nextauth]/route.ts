@@ -35,16 +35,18 @@ export const authOptions: NextAuthOptions = {
     // 将数据库中的 role 注入到 JWT token 中
     async jwt({ token, user }) {
       if (user) {
-        token.role = (user as any).role;
-        token.id = user.id;
-      }
+      const customUser = user as { id: string; role: string };
+        token.role = customUser.role;
+        token.id = customUser.id;
+             }
       return token;
     },
     // 将 token 中的 role 注入到前端可以读取的 session 中
     async session({ session, token }) {
       if (session.user) {
-        (session.user as any).role = token.role;
-        (session.user as any).id = token.id;
+        const sessionUser = session.user as { role?: string; id?: string };
+        sessionUser.role = token.role as string;
+        sessionUser.id = token.id as string;
       }
       return session;
     }

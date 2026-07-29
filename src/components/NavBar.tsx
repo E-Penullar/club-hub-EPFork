@@ -7,7 +7,7 @@ export default function NavBar() {
   const { data: session, status } = useSession();
   
   // 从 session 中安全地提取 role
-  const userRole = (session?.user as any)?.role;
+  const userRole = (session?.user as { role?: string })?.role;
 
   return (
     <Navbar expand="lg" style={{ backgroundColor: '#024731' }} variant="dark" className="shadow-sm">

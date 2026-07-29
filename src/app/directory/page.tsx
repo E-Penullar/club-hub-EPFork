@@ -65,10 +65,13 @@ export default async function DirectoryPage() {
                   </p>
                 </div>
                 <div className="card-footer bg-white border-top-0 pb-3">
-                  <Link href={`/directory/${club.id}`} passHref legacyBehavior>
-                    <a className="btn btn-outline-success w-100" style={{ color: '#024731', borderColor: '#024731' }}>
-                      View Details
-                    </a>
+                  {/* 修复：移除 legacyBehavior 和嵌套的 <a> 标签，直接将属性交给 Link */}
+                  <Link 
+                    href={`/directory/${club.id}`} 
+                    className="btn btn-outline-success w-100" 
+                    style={{ color: '#024731', borderColor: '#024731' }}
+                  >
+                    View Details
                   </Link>
                 </div>
               </div>

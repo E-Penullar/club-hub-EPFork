@@ -19,10 +19,10 @@ export default function NavBar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto align-items-center">
-            {/* 所有人可见 */}
+            {/* 所有人可见 (游客和所有角色) */}
             <Nav.Link as={Link} href="/directory">Directory</Nav.Link>
 
-            {/* 登录后可见 */}
+            {/* 只要登录了 (Student, Officer, Admin) 就能看 */}
             {status === 'authenticated' && (
               <Nav.Link as={Link} href="/home">My Dashboard</Nav.Link>
             )}

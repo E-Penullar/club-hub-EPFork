@@ -1,7 +1,9 @@
-export { default } from "next-auth/middleware";
+import { withAuth } from "next-auth/middleware";
+
+// 显式地导出一个中间件函数，满足 Next.js 的严格检查
+export default withAuth;
 
 export const config = {
-  // 只有匹配这里路径的页面，才会触发拦截并强制跳转到登录页
   matcher: [
     "/home",
     "/manage-club",

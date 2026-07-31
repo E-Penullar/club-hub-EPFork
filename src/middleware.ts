@@ -21,10 +21,18 @@ export default withAuth(
       // 只要是受保护的路由，必须有 token (必须登录) 才能进入这一层
       authorized: ({ token }) => !!token, 
     },
+    pages: {
+      signIn: "/api/auth/signin", // Explicitly set default signin page
+    },
   }
 );
 
 // 定义哪些路径受这套规则保护（不在里面的就是公开游客页面，比如 /directory）
 export const config = {
-  matcher: ["/admin/:path*", "/manage-club/:path*", "/my-dashboard/:path*"],
+  matcher: [
+    "/admin/:path*",
+    "/manage-club/:path*",
+    "/home/:path*",
+    "/my-dashboard/:path*",
+  ],
 };

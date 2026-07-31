@@ -24,7 +24,7 @@ async function main() {
       role: Role.ADMIN, // 赋予最高管理员权限
     },
   });
-  console.log(`✅ 成功创建测试用户: ${adminUser.email} (Role: ${adminUser.role})`);
+  console.log(`✅ 成功创建测试用户 (Test User Successfully Created): ${adminUser.email} (Role: ${adminUser.role})`);
 
   // 2. 播种 Officer (社团干部)
   const officerUser = await prisma.user.upsert({
@@ -36,7 +36,7 @@ async function main() {
       role: Role.OFFICER, // 赋予社团干部权限
     },
   });
-  console.log(`✅ 成功创建测试用户: ${officerUser.email} (Role: ${officerUser.role})`);
+  console.log(`✅ 成功创建测试用户 (Test User Successfully Created): ${officerUser.email} (Role: ${officerUser.role})`);
 
   // 3. 播种 Student (普通学生)
   const studentUser = await prisma.user.upsert({
@@ -48,9 +48,9 @@ async function main() {
       role: Role.STUDENT, // 赋予普通学生权限
     },
   });
-  console.log(`✅ 成功创建测试用户: ${studentUser.email} (Role: ${studentUser.role})`);
+  console.log(`✅ 成功创建测试用户 (Test User Successfully Created): ${studentUser.email} (Role: ${studentUser.role})`);
 
-  console.log('🎉 播种完成！');
+  console.log('🎉 播种完成！(Sowing Completed!)');
 }
 
 main()
@@ -58,7 +58,7 @@ main()
     await prisma.$disconnect();
   })
   .catch(async (e) => {
-    console.error('❌ 播种失败:', e);
+    console.error('❌ 播种失败 (Seeding Failure):', e);
     await prisma.$disconnect();
     process.exit(1);
   });

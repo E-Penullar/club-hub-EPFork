@@ -20,7 +20,7 @@ async function main() {
     update: {},
     create: {
       email: 'admin@test.com',
-      name: 'Admin User',
+      name: 'Admin',
       role: Role.ADMIN, // 赋予最高管理员权限
     },
   });

@@ -16,11 +16,11 @@ async function main() {
 
   // 1. 播种 Admin (系统管理员)
   const adminUser = await prisma.user.upsert({
-    where: { email: 'admin@test.com' },
+    where: { email: 'admin@hawaii.edu' },
     update: {},
     create: {
-      email: 'admin@test.com',
-      name: 'Admin Test',
+      email: 'admin@hawaii.edu',
+      name: 'adminpassword', // Password
       role: Role.ADMIN, // 赋予最高管理员权限
     },
   });
@@ -28,11 +28,11 @@ async function main() {
 
   // 2. 播种 Officer (社团干部)
   const officerUser = await prisma.user.upsert({
-    where: { email: 'officer@test.com' },
+    where: { email: 'officer@hawaii.edu' },
     update: {},
     create: {
-      email: 'officer@test.com',
-      name: 'Officer User',
+      email: 'officer@hawaii.edu',
+      name: 'officerpassword', // Password
       role: Role.OFFICER, // 赋予社团干部权限
     },
   });
@@ -40,11 +40,11 @@ async function main() {
 
   // 3. 播种 Student (普通学生)
   const studentUser = await prisma.user.upsert({
-    where: { email: 'test@test.com' },
+    where: { email: 'student@hawaii.edu' },
     update: {},
     create: {
-      email: 'test@test.com',
-      name: 'Student User',
+      email: 'student@hawaii.edu',
+      name: 'studentpassword', // Password
       role: Role.STUDENT, // 赋予普通学生权限
     },
   });

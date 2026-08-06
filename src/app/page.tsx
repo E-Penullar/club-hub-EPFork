@@ -1,5 +1,6 @@
 "use client";
 import { Container, Row, Col, Button } from 'react-bootstrap';
+import { signIn } from 'next-auth/react';
 
 export default function LandingPage() {
   return (
@@ -13,7 +14,7 @@ export default function LandingPage() {
               The centralized directory to connect students at the University of Hawaiʻi at Mānoa with campus organizations, clubs, and extracurricular activities.
             </p>
             {/* 模拟的 UHM Login 按钮 */}
-            <Button variant="light" size="lg" className="fw-bold px-5 py-3">
+            <Button variant="light" size="lg" className="fw-bold px-5 py-3" onClick={() => signIn()}>
               Login via UHM Account
             </Button>
           </div>

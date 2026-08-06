@@ -80,7 +80,8 @@ model Club {
   meetingTime   String?
   location      String?
   image         String?        // 用于展示社团图片的链接 (对应 DirectoryPage 的 Placeholder)
-  
+  category      String?
+
   // 系统管理员后台控制的状态
   status        ClubStatus     @default(PENDING) 
   

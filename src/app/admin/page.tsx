@@ -1,21 +1,72 @@
-"use client";
-import { Container, Row, Col, Table, Button, Badge } from 'react-bootstrap';
+import prisma from '../../lib/prisma';
+import { revalidatePath } from 'next/cache';
 
-export default function AdminDashboardPage() {
+export default async function AdminDashboardPage() {
+  // 1. Fetch real data from the database
+  // Fetch pending registrations
+  const pendingClubs = await prisma.club.findMany({
+    where: { status: 'PENDING' },
+    include: { officer: true }, // Include officer to display the applicant's name/email
+  });
+
+  // Fetch existing clubs (Active or Inactive)
+  const existingClubs = await prisma.club.findMany({
+    where: { status: { not: 'PENDING' } },
+    include: { officer: true },
+  });
+
+  // 2. Define Server Actions for button clicks
+  async function approveClub(formData: FormData) {
+    'use server';
+    const id = formData.get('id') as string;
+    await prisma.club.update({
+      where: { id },
+      data: { status: 'ACTIVE' },
+    });
+    revalidatePath('/admin');
+    revalidatePath('/directory');
+  }
+
+  async function rejectOrDeleteClub(formData: FormData) {
+    'use server';
+    const id = formData.get('id') as string;
+    await prisma.club.delete({
+      where: { id },
+    });
+    revalidatePath('/admin');
+    revalidatePath('/directory');
+  }
+
+  async function toggleClubStatus(formData: FormData) {
+    'use server';
+    const id = formData.get('id') as string;
+    const currentStatus = formData.get('status') as string;
+    const newStatus = currentStatus === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE';
+    
+    await prisma.club.update({
+      where: { id },
+      data: { status: newStatus },
+    });
+    revalidatePath('/admin');
+    revalidatePath('/directory');
+  }
+
+  // 3. Render the UI using standard Bootstrap classes (Server-side rendered)
   return (
-    <Container className="py-5">
-      <Row className="mb-4">
-        <Col>
+    <div className="container py-5">
+      <div className="row mb-4">
+        <div className="col">
           <h1 className="fw-bold" style={{ color: '#024731' }}>Admin Dashboard</h1>
           <p className="text-muted fs-5">Review new registrations and manage the club directory.</p>
-        </Col>
-      </Row>
+        </div>
+      </div>
 
-      <Row className="mb-5">
-        <Col>
+      {/* Pending Registrations Section */}
+      <div className="row mb-5">
+        <div className="col">
           <h3 className="fw-bold mb-3" style={{ color: '#024731' }}>Pending Registrations</h3>
           <div className="table-responsive shadow-sm rounded">
-            <Table striped bordered hover className="mb-0 bg-white">
+            <table className="table table-striped table-bordered table-hover mb-0 bg-white">
               <thead className="table-light">
                 <tr>
                   <th>Club Name</th>
@@ -25,76 +76,96 @@ export default function AdminDashboardPage() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td className="align-middle fw-bold">Data Science Society</td>
-                  <td className="align-middle">Jane Doe</td>
-                  <td className="align-middle">Oct 24, 2026</td>
-                  <td className="align-middle text-center">
-                    <Button variant="success" size="sm" className="me-2">Approve</Button>
-                    <Button variant="danger" size="sm">Reject</Button>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="align-middle fw-bold">UH Robotics</td>
-                  <td className="align-middle">John Smith</td>
-                  <td className="align-middle">Oct 25, 2026</td>
-                  <td className="align-middle text-center">
-                    <Button variant="success" size="sm" className="me-2">Approve</Button>
-                    <Button variant="danger" size="sm">Reject</Button>
-                  </td>
-                </tr>
+                {pendingClubs.length === 0 ? (
+                  <tr>
+                    <td colSpan={4} className="text-center py-4 text-muted">
+                      No pending registrations at this time.
+                    </td>
+                  </tr>
+                ) : (
+                  pendingClubs.map((club) => (
+                    <tr key={club.id}>
+                      <td className="align-middle fw-bold">{club.name}</td>
+                      <td className="align-middle">{club.officer?.email || 'Unknown'}</td>
+                      <td className="align-middle">{club.createdAt.toLocaleDateString()}</td>
+                      <td className="align-middle text-center">
+                        <div className="d-flex justify-content-center gap-2">
+                          <form action={approveClub}>
+                            <input type="hidden" name="id" value={club.id} />
+                            <button type="submit" className="btn btn-success btn-sm">Approve</button>
+                          </form>
+                          <form action={rejectOrDeleteClub}>
+                            <input type="hidden" name="id" value={club.id} />
+                            <button type="submit" className="btn btn-danger btn-sm">Reject</button>
+                          </form>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
-            </Table>
+            </table>
           </div>
-        </Col>
-      </Row>
+        </div>
+      </div>
 
-      <Row>
-        <Col>
+      {/* Manage Existing Clubs Section */}
+      <div className="row">
+        <div className="col">
           <h3 className="fw-bold mb-3" style={{ color: '#024731' }}>Manage Existing Clubs</h3>
           <div className="table-responsive shadow-sm rounded">
-            <Table striped bordered hover className="mb-0 bg-white">
+            <table className="table table-striped table-bordered table-hover mb-0 bg-white">
               <thead className="table-light">
                 <tr>
                   <th>Club Name</th>
+                  <th>Category</th>
                   <th>Status</th>
-                  <th>Members</th>
                   <th className="text-center">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td className="align-middle fw-bold">Engineers&apos; Council</td>
-                  <td className="align-middle"><Badge bg="success">Active</Badge></td>
-                  <td className="align-middle">124</td>
-                  <td className="align-middle text-center">
-                    <Button variant="outline-primary" size="sm" className="me-2">Edit</Button>
-                    <Button variant="outline-danger" size="sm">Delete</Button>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="align-middle fw-bold">UH Esports</td>
-                  <td className="align-middle"><Badge bg="success">Active</Badge></td>
-                  <td className="align-middle">85</td>
-                  <td className="align-middle text-center">
-                    <Button variant="outline-primary" size="sm" className="me-2">Edit</Button>
-                    <Button variant="outline-danger" size="sm">Delete</Button>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="align-middle fw-bold">Hawaiian Language Club</td>
-                  <td className="align-middle"><Badge bg="secondary">Inactive</Badge></td>
-                  <td className="align-middle">32</td>
-                  <td className="align-middle text-center">
-                    <Button variant="outline-primary" size="sm" className="me-2">Edit</Button>
-                    <Button variant="outline-danger" size="sm">Delete</Button>
-                  </td>
-                </tr>
+                {existingClubs.length === 0 ? (
+                  <tr>
+                    <td colSpan={4} className="text-center py-4 text-muted">
+                      No active or inactive clubs found.
+                    </td>
+                  </tr>
+                ) : (
+                  existingClubs.map((club) => (
+                    <tr key={club.id}>
+                      <td className="align-middle fw-bold">{club.name}</td>
+                      <td className="align-middle">{club.category || 'N/A'}</td>
+                      <td className="align-middle">
+                        <span className={`badge ${club.status === 'ACTIVE' ? 'bg-success' : 'bg-secondary'}`}>
+                          {club.status}
+                        </span>
+                      </td>
+                      <td className="align-middle text-center">
+                        <div className="d-flex justify-content-center gap-2">
+                          <form action={toggleClubStatus}>
+                            <input type="hidden" name="id" value={club.id} />
+                            <input type="hidden" name="status" value={club.status} />
+                            <button 
+                              type="submit" 
+                              className={`btn btn-sm ${club.status === 'ACTIVE' ? 'btn-outline-warning' : 'btn-outline-success'}`}
+                            >
+                              {club.status === 'ACTIVE' ? 'Deactivate' : 'Activate'}
+                            </button>
+                          </form>
+                          <form action={rejectOrDeleteClub}>
+                            <input type="hidden" name="id" value={club.id} />
+                            <button type="submit" className="btn btn-outline-danger btn-sm">Delete</button>
+                          </form>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
-            </Table>
+            </table>
           </div>
-        </Col>
-      </Row>
-    </Container>
+        </div>
+      </div>
+    </div>
   );
 }

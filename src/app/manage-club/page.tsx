@@ -11,12 +11,9 @@ export default async function ManageClubPage() {
 
   // 2. 根据当前登录用户的 ID 查找他所负责的社团
   // 如果是 Admin 或者是对应的 Officer，我们可以通过 officerId 找到精准的社团
-  let club = null;
-  if (userId) {
-    club = await prisma.club.findFirst({
-      where: { officerId: userId },
-    });
-  }
+ let club = userId 
+  ? await prisma.club.findFirst({ where: { officerId: userId } }) 
+  : await prisma.club.findFirst(); 
 
   // 如果没找到专属社团，降级抓取第一个（方便未绑定账号时测试）
   if (!club) {

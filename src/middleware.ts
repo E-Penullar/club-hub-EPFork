@@ -18,7 +18,7 @@ export default withAuth(
   },
   {
     callbacks: {
-      // 只要是受保护的路由，必须有 token (必须登录) 才能进入这一层
+      // 只要是受保护的路由，必须有 token (必须登录) 才能进入这一层逻辑
       authorized: ({ token }) => !!token, 
     },
   }
@@ -26,5 +26,6 @@ export default withAuth(
 
 // 定义哪些路径受这套规则保护（不在里面的就是公开游客页面，比如 /directory）
 export const config = {
-  matcher: ["/admin/:path*", "/manage-club/:path*", "/my-dashboard/:path*"],
+  // 注意：此处已将 /my-dashboard 修正为 /home 以匹配测试用例
+  matcher: ["/home", "/admin/:path*", "/manage-club/:path*"],
 };

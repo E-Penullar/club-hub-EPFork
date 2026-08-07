@@ -15,10 +15,9 @@ export default async function DirectoryPage({
   const searchQuery = resolvedParams?.search || '';
   const categoryQuery = resolvedParams?.category || '';
 
-  // 构建 Prisma 查询条件，确保只查 ACTIVE 状态的
- // 构建 Prisma 查询条件，确保只查 ACTIVE 状态的，并提供严格的类型定义以通过 ESLint
+// 构建 Prisma 查询条件，确保只查 ACTIVE 状态的，并提供严格的类型定义以通过 ESLint 和 Prisma 检查
   const whereCondition: {
-    status: string;
+    status: 'ACTIVE'; // 核心修复：将 string 改为精确的字面量类型 'ACTIVE'
     category?: string;
     OR?: Array<{
       name?: { contains: string; mode: 'insensitive' };
@@ -26,7 +25,7 @@ export default async function DirectoryPage({
     }>;
   } = {
     status: 'ACTIVE',
-  }; 
+  };
 
   // 如果有分类要求，加入 category 查询条件
   if (categoryQuery && categoryQuery !== 'All') {

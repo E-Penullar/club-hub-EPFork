@@ -18,7 +18,7 @@ export default withAuth(
   },
   {
     callbacks: {
-      // 只要是受保护的路由，必须有 token (必须登录) 才能进入这一层
+      // 只要是受保护的路由，必须有 token (必须登录) 才能进入这一层逻辑
       authorized: ({ token }) => !!token, 
     },
     pages: {

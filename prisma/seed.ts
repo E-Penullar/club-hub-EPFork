@@ -1,7 +1,7 @@
 import 'dotenv/config'; // 确保在独立运行脚本时能读取到 .env 里的 DATABASE_URL
 import { Pool } from 'pg';
 import { PrismaPg } from '@prisma/adapter-pg';
-import { PrismaClient, Role, ClubStatus } from '../src/generated/prisma';
+import { PrismaClient, Role } from '../src/generated/prisma';
 
 // 1. 初始化数据库连接池
 const connectionString = process.env.DATABASE_URL;

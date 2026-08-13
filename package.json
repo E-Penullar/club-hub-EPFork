@@ -11,16 +11,21 @@
     "postinstall": "prisma generate"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.7.1",
     "@next-auth/prisma-adapter": "^1.0.7",
     "@prisma/adapter-pg": "^7.9.1",
     "@prisma/client": "^7.9.1",
+    "bcrypt": "^6.0.0",
     "bootstrap": "^5.3.8",
     "next": "16.2.10",
     "next-auth": "^4.24.15",
     "pg": "^8.22.0",
     "react": "19.2.4",
     "react-bootstrap": "^2.10.10",
-    "react-dom": "19.2.4"
+    "react-bootstrap-icons": "^1.11.6",
+    "react-dom": "19.2.4",
+    "react-hook-form": "^7.85.0",
+    "yup": "^1.7.1"
   },
   "devDependencies": {
     "@playwright/test": "^1.62.0",

@@ -1,0 +1,55 @@
+{
+  "defaultAccounts": [
+    { "email": "admin@hawaii.edu", "password": "adminpassword", "role": "ADMIN" },
+    { "email": "officer@hawaii.edu", "password": "officerpassword", "role": "OFFICER" },
+    { "email": "student@hawaii.edu", "password": "studentpassword", "role": "STUDENT" }
+
+  ],
+  "defaultClubs": [
+    {
+      "name": "ACM Manoa",
+      "description": "Association for Computing Machinery at UH Manoa. We host workshops, hackathons, and networking events for students interested in computer science and software engineering.",
+      "email": "acm@hawaii.edu",
+      "meetingTime": "Fridays at 4:30 PM",
+      "location": "POST 318B",
+      "category": "Academic/Professional",
+      "status": "ACTIVE"
+    },
+    {
+      "name": "UH Esports Association",
+      "description": "The official esports organization for the University of Hawaii. We field competitive collegiate teams for Valorant, League of Legends, Overwatch, and more.",
+      "email": "esports@hawaii.edu",
+      "meetingTime": "Saturdays at 2:00 PM",
+      "location": "iLab",
+      "category": "Recreational/Gaming",
+      "status": "ACTIVE"
+    },
+    {
+      "name": "Grey Hats Cyber Security Club",
+      "description": "Dedicated to learning and practicing ethical hacking, cybersecurity principles, and participating in Capture the Flag (CTF) competitions.",
+      "email": "greyhats@hawaii.edu",
+      "meetingTime": "Wednesdays at 5:00 PM",
+      "location": "POST 319",
+      "category": "Academic/Professional",
+      "status": "ACTIVE"
+    },
+    {
+      "name": "Photography Club at UHM",
+      "description": "A community for students passionate about photography to share knowledge, go on photo walks, and organize exhibitions.",
+      "email": "photouhm@hawaii.edu",
+      "meetingTime": "Tuesdays at 3:30 PM",
+      "location": "Campus Center 309",
+      "category": "Arts & Culture",
+      "status": "ACTIVE"
+    },
+    {
+      "name": "New Club Pending Approval",
+      "description": "This is a brand new club waiting for admin approval to show up on the directory.",
+      "email": "newclub@hawaii.edu",
+      "meetingTime": "TBD",
+      "location": "TBD",
+      "category": "Other",
+      "status": "PENDING" 
+    }
+  ]
+}
